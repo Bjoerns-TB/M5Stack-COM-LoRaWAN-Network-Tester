@@ -1,4 +1,4 @@
-# M5Stack-LoRa-868-Network-Tester
+# M5Stack-COM.LoRaWAN-Network-Tester
 
 A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compatible with TTN (The Things Network)
 
@@ -56,8 +56,6 @@ On boot you will be presented with the "Boot-Logo" followed by the first working
   - [NACK](#nack) 
   - [ACK](#ack)  
   - [MAN](#man)  
-  - [LCM](#lcm)
-  - [SSV](#ssv)
   - [OTAA](#otaa)
   - [SET](#set)
  
@@ -85,19 +83,6 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 
 ![MAN Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/man.jpg "Fig 4. MAN")
 
-#### LCM 
-#### (LinkCheckMode)
-"LCM" is a mode that will trigger a LinkCheckRequest. The TTN backend will report back the number of gateways which received the request. Pushing button B will let you cycle through each spreadfactor. The request is triggered by button C.
-
-![LCM Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/lcm.jpg "Fig 5. LCM")
-
-#### SSV 
-#### (SiteSurvey)
-"SSV" is supposed as mode for testing a location. During SSV mode the DutyCycle check will be disabled an the Node will send a LinkCheckRequest for every spreadfactor from SF7 to SF12. After the test the node will show you on which datarates a ACK was received back. The data is also stored on the SD card in GeoJSON format an could be analyzed with [geojson.io]
-
-![SSV Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/ssv-1.jpg "Fig 6. SSV running")
-![SSV Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/ssv-2.jpg "Fig 7. SSV results")
-
 #### OTAA 
 #### (OverTheAirActivation)
 "OTAA" enables the tester to perform OTAA-Joins. By selecting Join the tester will try to join the TTN Network. After an successful the the tester will start with periodic transmissions. You have the choice between transmission with or without ACK. The RSSI and SNR values of the received packet will be shown on the display. If there is no valid GPS fix, a packet can by manually send by pushing button B.
@@ -112,14 +97,13 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 ![SET Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/set.jpg "Fig 7. SET")
 
 ## Notes
-  - The DutyCycle check ist activated except for the SSV mode.
   - If you have a valid GPS fix the GPS track will be written to the SD card as a GPX file.
   - Periodic transmission will only work with a valid GPS fix and an GPS age below 2 seconds
   
   
 ## Known Bugs/Limitations
-  - Sometimes, if an ACK is not received, the node tries to resend the last message multiple times. This will interfer with other jobs. Retries are turned of, but sometimes happen.
-  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 150 seconds. Status will display "Queued".
+  - No change of SF supported
+  - No LinkCheckRequest possible
   
 
 ## Accesories
