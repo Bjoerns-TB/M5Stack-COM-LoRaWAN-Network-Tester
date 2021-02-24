@@ -4,6 +4,8 @@ A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compat
 
 The AT command set of the module does not allow the change of the spreading factor and it is not possible to perform a LinkCheckRequest. So this version does not allow you to change the SF also LCM and SSV mode are not integrated/possible.
 
+So at the momenat the tester ist fixed to SF7 and this repo is only seen as a proof of concept.
+
 [Version for LoRa 868 Module]
 
 [Version for LoRaWAN Module]
