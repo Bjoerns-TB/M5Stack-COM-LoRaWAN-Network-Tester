@@ -27,6 +27,10 @@ The tester is designed to work with the following hardware:
 #### Installation and Configuration
 Upload this sketch to your M5 using the Arduino IDE. M5Stack Fire users have to disable PSRAM, because it will interfer with UART2.
 UART2 with GPIO 16 and 17 willbe used for the GPS module.
+
+USe the mini switch on dem COM.X module to set RX to 13 an TX to 5.
+
+![Setup Image](https://github.com/Bjoerns-TB/M5Stack-COM-LoRaWAN-Network-Tester/blob/main/images/IMG_2197-scaled.jpg "Module Setup")
    
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
