@@ -35,7 +35,7 @@ USe the mini switch on dem COM.X module to set RX to 13 an TX to 5.
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
   
-Change the your TTN keys under //LoRaWAN ABP and //LoRaWAN OTAA in the networktester.ino file. If you want yo use OTAA you have to register a second device for your application. 
+Change the your TTN keys under //ABP and //OTAA inside the initlora() function from the networktester.ino file. If you want yo use OTAA you have to register a second device for your application. 
 
 Payload Decoder for TTN (also compatible with TTN Mapper integration):
 
