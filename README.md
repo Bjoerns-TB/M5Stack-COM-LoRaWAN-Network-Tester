@@ -62,7 +62,7 @@ function Decoder(b, port) {
 
 #### Menu
 
-On boot you will be presented with the "Boot-Logo" followed by the first working mode. At the moment the tester has 7 modes to select:
+On boot you will be presented with the "Boot-Logo" followed by the first working mode. At the moment the tester has 5 modes to select:
   - [NACK](#nack) 
   - [ACK](#ack)  
   - [MAN](#man)  
