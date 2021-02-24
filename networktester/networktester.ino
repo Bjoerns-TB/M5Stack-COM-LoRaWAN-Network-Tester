@@ -23,7 +23,6 @@ TaskHandle_t TaskPixel;
 
 //Image
 extern const unsigned char gImage_logoM5[];
-extern const unsigned char logo320240[];
 
 #ifdef M5go
 //NeoPixel
@@ -437,14 +436,14 @@ void initlora() {
     ATCommand("IsTxConfirmed", "0");		//enable unconfirmed uplinks
     ATCommand("ConfirmedNbTrials", "1");		//set numer of trials for confirmed upklinks to 1
     ATCommand("AutoLPM", "1");		//enable auto low power mode
-	  //ABP
+    //ABP
     ATCommand("NwkSKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     ATCommand("AppSKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     ATCommand("DevAddr", "XXXXXXXX");
-	  //OTAA 
-	  ATCommand("DevEui", "XXXXXXXXXXXXXXXX");
-	  ATCommand("AppEui", "XXXXXXXXXXXXXXXX");
-	  ATCommand("AppKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    //OTAA 
+    ATCommand("DevEui", "XXXXXXXXXXXXXXXX");
+    ATCommand("AppEui", "XXXXXXXXXXXXXXXX");
+    ATCommand("AppKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     ATCommand("ADR", "0");            //disable ADR
     joinabp();
   }
@@ -1068,8 +1067,7 @@ void setup() {
 #endif
   Serial1.begin(115200, SERIAL_8N1, 5, 13);
   M5.Lcd.setBrightness(50);
-  M5.Lcd.drawBitmap(0, 0, 320, 240, (uint16_t *)logo320240);
-  //M5.Lcd.pushImage(0, 0, 320, 240, (uint16_t *)gImage_logoM5);
+  M5.Lcd.pushImage(0, 0, 320, 240, (uint16_t *)gImage_logoM5);
 
   initlora();
 
