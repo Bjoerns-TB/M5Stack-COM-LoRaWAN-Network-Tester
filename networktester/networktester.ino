@@ -434,7 +434,7 @@ void initlora() {
     ATCommand("LORAWAN", "1");        //Set device to LoRaWAN mode
     ATCommand("OTAA", "0");           //enable ABP
     ATCommand("IsTxConfirmed", "0");		//enable unconfirmed uplinks
-    ATCommand("ConfirmedNbTrials", "3");		//set numer of trials for confirmed upklinks to 1
+    ATCommand("ConfirmedNbTrials", "1");		//set numer of trials for confirmed upklinks to 1
     ATCommand("AutoLPM", "1");		//enable auto low power mode
     //ABP
     ATCommand("NwkSKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
