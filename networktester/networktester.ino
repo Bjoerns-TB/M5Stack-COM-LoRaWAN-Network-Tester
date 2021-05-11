@@ -7,7 +7,6 @@
 #define M5gps         //Use of GPS module
 
 #define BUFFER_LENGTH_MAX    256
-#define _DEBUG_SERIAL_      1
 
 #ifdef M5go
 #include <NeoPixelBrightnessBus.h>  //  https://github.com/Makuna/NeoPixelBus
@@ -300,9 +299,6 @@ bool ATCommand(char cmd[], char date[], uint32_t timeout = 300)
   Serial1.write(buf);
   memset(_buffer, 0, BUFFER_LENGTH_MAX);
   readBuffer(_buffer, BUFFER_LENGTH_MAX, timeout);
-#if _DEBUG_SERIAL_
-  Serial.print(_buffer);
-#endif
   if (strstr(_buffer, "+OK"))return true;
   return false;
 }
@@ -322,9 +318,6 @@ bool transferPacket(unsigned char *buffer, int length, uint32_t timeout)
     }
     str[length * 2] = '\0';
   }
-#if _DEBUG_SERIAL_
-  Serial.println(str);
-#endif
 
   //2. send
   char buf[256] = {0};
@@ -334,9 +327,6 @@ bool transferPacket(unsigned char *buffer, int length, uint32_t timeout)
   Serial1.write(buf);
   memset(_buffer, 0, BUFFER_LENGTH_MAX);
   readBuffer(_buffer, BUFFER_LENGTH_MAX, timeout);
-#if _DEBUG_SERIAL_
-  Serial.print(_buffer);
-#endif
   if (strstr(_buffer, "sending"))return true;
   return false;
 }
@@ -401,9 +391,6 @@ bool joinotaa()
   Serial1.write("AT+Join=1");
   memset(_buffer, 0, BUFFER_LENGTH_MAX);
   readBuffer(_buffer, BUFFER_LENGTH_MAX, timeout);
-#if _DEBUG_SERIAL_
-  Serial.print(_buffer);
-#endif
   if (strstr(_buffer, "joined"))return true;
   return false;
 }
@@ -419,9 +406,6 @@ bool joinabp()
   Serial1.write("AT+Join=1");
   memset(_buffer, 0, BUFFER_LENGTH_MAX);
   readBuffer(_buffer, BUFFER_LENGTH_MAX, timeout);
-#if _DEBUG_SERIAL_
-  Serial.print(_buffer);
-#endif
   if (strstr(_buffer, "sending"))return true;
   return false;
 }
@@ -446,6 +430,7 @@ void initlora() {
     ATCommand("AppKey", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     ATCommand("ADR", "0");            //disable ADR
     joinabp();
+	ATCommand("SetDR", "5");
   }
 }
 
@@ -506,7 +491,22 @@ void sendobject() {
 
     UISet(&UIInputbox_awnh87, "Sending");
     ATCommand("LORAWAN", "?");
-    if (ack == true) {
+	
+	  if (isf == 0) {
+        ATCommand("SetDR", "5");
+      } else if (isf == 1) {
+        ATCommand("SetDR", "4");
+      } else if (isf == 2) {
+        ATCommand("SetDR", "3");
+      } else if (isf == 3) {
+        ATCommand("SetDR", "2");
+      } else if (isf == 4) {
+        ATCommand("SetDR", "1");
+      } else if (isf == 5) {
+        ATCommand("SetDR", "0");
+      }				  
+    
+	if (ack == true) {
       ATCommand("IsTxConfirmed", "0");
       ack = false;
     }
@@ -532,7 +532,22 @@ void sendobject() {
 
     UISet(&UIInputbox_awnh87, "ACK");
     ATCommand("LORAWAN", "?");
-    if (ack == false) {
+	
+	  if (isf == 0) {
+        ATCommand("SetDR", "5");
+      } else if (isf == 1) {
+        ATCommand("SetDR", "4");
+      } else if (isf == 2) {
+        ATCommand("SetDR", "3");
+      } else if (isf == 3) {
+        ATCommand("SetDR", "2");
+      } else if (isf == 4) {
+        ATCommand("SetDR", "1");
+      } else if (isf == 5) {
+        ATCommand("SetDR", "0");
+      }
+    
+	if (ack == false) {
       ATCommand("IsTxConfirmed", "1");
       ack = true;
     }
@@ -1117,8 +1132,8 @@ void setup() {
   }
 
   //Prepare UI for iwm = 0
-  //UISet(&UITextbox_vimqus, sf[isf]);
-  UIDisable(true, &UITextbox_vimqus);
+  UISet(&UITextbox_vimqus, sf[isf]);
+  UIDisable(false, &UITextbox_vimqus);
   
   UIDisable(true, &UIProgressbar_eymzer);
   UIDisable(true, &UITextbox_859t1hi);
@@ -1173,8 +1188,8 @@ void loop() {
     }
 
     if (iwm == 0) {
-      //UISet(&UITextbox_vimqus, sf[isf]);
-      UIDisable(true, &UITextbox_vimqus);
+      UISet(&UITextbox_vimqus, sf[isf]);
+      UIDisable(false, &UITextbox_vimqus);
       UIDisable(false, &UIInputbox_awnh87);
       UISet(&UITextbox_67ofwdh, "Dim");
     } else if (iwm == 1) {
