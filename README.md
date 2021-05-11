@@ -37,7 +37,7 @@ By commenting out #define M5gps ist is possible to disable the M5GPS module. Thi
   
 Change the your TTN keys under //ABP and //OTAA inside the initlora() function from the networktester.ino file. If you want yo use OTAA you have to register a second device for your application. 
 
-Payload Decoder for TTN (also compatible with TTN Mapper integration):
+Payload Decoder for TTN (V2) (also compatible with TTN Mapper integration):
 
 ```
 function Decoder(b, port) {
@@ -55,6 +55,23 @@ function Decoder(b, port) {
       hdop: hdop
     
   };
+}
+```
+Payload Decoder for The Things Stack (V3) (experimental):
+```
+function decodeUplink(input) {
+    var data = {};
+
+  data.latitude = (input.bytes[0] | input.bytes[1]<<8 | input.bytes[2]<<16 | (input.bytes[2] & 0x80 ? 0xFF<<24 : 0)) / 10000;
+  data.longitude = (input.bytes[3] | input.bytes[4]<<8 | input.bytes[5]<<16 | (input.bytes[5] & 0x80 ? 0xFF<<24 : 0)) / 10000;
+  data.altitude = (input.bytes[6] | input.bytes[7]<<8 | (input.bytes[7] & 0x80 ? 0xFF<<16 : 0)) / 100;
+  data.hdop = input.bytes[8] / 10;
+
+        return {
+        data: data,
+        warnings: [],
+        errors: []
+    };
 }
 ```
 
@@ -126,6 +143,7 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
     - Remove debug code
     - Fixed beep only on ACK received
     - Changed status message for no ACK received to "ACK NOT OK"
+    - Added The Things Stack payload decoder
     
   - 01.03.2021
     - First commit
