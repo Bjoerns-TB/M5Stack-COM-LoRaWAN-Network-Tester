@@ -4,7 +4,7 @@ A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compat
 
 The AT command set of the module does not allow to perform a LinkCheckRequest. So in this version LCM and SSV mode are not integrated/possible. 
 
-To use the new SetDR feature, you have to update the CubeCell module. In short you have to flash the LoRa -> AT-Command example ont the CubeCell module. Don't forget to set the region. Instructions for [Update COM.LoRaWAN] (Only in german).
+To use the new SetDR feature, you have to update the CubeCell module. In short you have to flash the LoRa -> AT-Command example ont the CubeCell module. Don't forget to set the region. Instructions for [Update COM.LoRaWAN] (Only in german). ACK won't work past SF8 because TTN will send on RX2 frequency.
 
 [Version for LoRa 868 Module]
 
