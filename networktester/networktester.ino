@@ -572,7 +572,7 @@ void sendobject() {
       if (rssi != -255){
         UISet(&UIInputbox_awnh87, "ACK OK");
       } else {
-        UISet(&UIInputbox_awnh87, "ACK NOK");
+        UISet(&UIInputbox_awnh87, "ACK NOT OK");
       }
 
       if (iwm == 1 && rssi != -255) {
