@@ -124,6 +124,8 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
   - 11.05.2021
     - Ad support for SetDR command (the CubeCell must be updatet to AT Comannd V1.3)
     - Remove debug code
+    - Fixed beep only on ACK received
+    - Changed status message for no ACK received to "ACK NOT OK"
     
   - 01.03.2021
     - First commit
