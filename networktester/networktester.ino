@@ -595,7 +595,9 @@ void sendobject() {
       UISet(&UITextbox_olwwlae, snr);
 
 #ifdef M5go
-      if (rssi < -120) {
+      if (rssi < -200) {
+        strip.SetPixelColor(7, off);
+      } else if (rssi < -120) {
         strip.SetPixelColor(7, blue);
       } else if (rssi < -115) {
         strip.SetPixelColor(7, lightblue);
@@ -644,7 +646,9 @@ void sendobject() {
       UISet(&UIInputbox_6nssds, gwcnt);
 
 #ifdef M5go
-      if (rssi < -120) {
+      if (rssi < -200) {
+        strip.SetPixelColor(7, off);
+      } else if (rssi < -120) {
         strip.SetPixelColor(7, blue);
       } else if (rssi < -115) {
         strip.SetPixelColor(7, lightblue);
@@ -749,7 +753,9 @@ void sendobjectotaa() {
       UISet(&UITextbox_olwwlae, snr);
 
 #ifdef M5go
-      if (rssi < -120) {
+      if (rssi < -200) {
+        strip.SetPixelColor(7, off);
+      } else if (rssi < -120) {
         strip.SetPixelColor(7, blue);
       } else if (rssi < -115) {
         strip.SetPixelColor(7, lightblue);
