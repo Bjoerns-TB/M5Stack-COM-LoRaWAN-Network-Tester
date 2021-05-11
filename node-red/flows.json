@@ -1,0 +1,237 @@
+[
+    {
+        "id": "f457965c.062688",
+        "type": "mqtt in",
+        "z": "613373c4.05758c",
+        "name": "my-app +/devices/+/up",
+        "topic": "+/devices/+/up",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "",
+        "nl": false,
+        "rap": false,
+        "x": 120,
+        "y": 3340,
+        "wires": [
+            [
+                "f2f811d4.39f79"
+            ]
+        ]
+    },
+    {
+        "id": "49d1ceec.9d882",
+        "type": "comment",
+        "z": "613373c4.05758c",
+        "name": "V2-MQTT",
+        "info": "",
+        "x": 80,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "f2f811d4.39f79",
+        "type": "switch",
+        "z": "613373c4.05758c",
+        "name": "",
+        "property": "payload.counter",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 290,
+        "y": 3340,
+        "wires": [
+            [],
+            [
+                "8f4b7e69.36ae7"
+            ]
+        ]
+    },
+    {
+        "id": "8f4b7e69.36ae7",
+        "type": "switch",
+        "z": "613373c4.05758c",
+        "name": "",
+        "property": "payload.port",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "99",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 470,
+        "y": 3340,
+        "wires": [
+            [
+                "caa3e12.ae8732"
+            ],
+            [
+                "7ef6e407.0c739c"
+            ]
+        ]
+    },
+    {
+        "id": "7ef6e407.0c739c",
+        "type": "function",
+        "z": "613373c4.05758c",
+        "name": "",
+        "func": "var maxValue = -200;\nvar indexOfMaxValue = -1;\n    for(var i = 0; i < msg.payload.metadata.gateways.length; i++){\n        if(msg.payload.metadata.gateways[i].rssi > maxValue && msg.payload.metadata.gateways[i].rssi !==0 ){\n            indexOfMaxValue = i;\n            maxValue = msg.payload.metadata.gateways[i].rssi;\n        }\n    }\n\n//lat\nvar msg1 = { payload: msg.payload.length };\n//msg3.payload = JSON.parse(msg.payload);\nmsg1.payload = msg.payload.payload_fields.latitude;\n\n//lon\nvar msg2 = { payload: msg.payload.length };\n//msg4.payload = JSON.parse(msg.payload);\nmsg2.payload = msg.payload.payload_fields.longitude;\n\n//alt\nvar msg7 = { payload: msg.payload.length };\nmsg7.payload = msg.payload.payload_fields.altitude;\n\n//hdop\nvar msg8 = { payload: msg.payload.length };\nmsg8.payload = msg.payload.payload_fields.hdop;\n\n\n//rssi\nvar msg3 = { payload: msg.payload.length };\n//msg3.payload = JSON.parse(msg.payload);\nmsg3.payload = msg.payload.metadata.gateways[indexOfMaxValue].rssi;\n\n//snr\nvar msg4 = { payload: msg.payload.length };\n//msg4.payload = JSON.parse(msg.payload);\nmsg4.payload = msg.payload.metadata.gateways[indexOfMaxValue].snr;\n\n//SF\nvar msg5 = { payload: msg.payload.length };\nmsg5.payload = msg.payload.metadata.data_rate\nmsg5.payload = msg5.payload.split(\"BW\");\nmsg5.payload = msg5.payload[0];\nmsg5.payload = msg5.payload.split(\"SF\");\nmsg5.payload = parseInt(msg5.payload[1]);\n\n//Output\nvar msg9 = {};\nmsg9.payload = {\"lat\": msg1.payload, \"lon\": msg2.payload, \"rssi\": msg3.payload, \"snr\": msg4.payload, \"SF\": msg5.payload, \"alt\": msg7.payload, \"hdop\": msg8.payload};\n\nif (msg1.payload != 0) {\nreturn msg9;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 3360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d9af5c50.4bce9",
+        "type": "mqtt out",
+        "z": "613373c4.05758c",
+        "name": "",
+        "topic": "{app-id}/devices/{device-id}/down",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "",
+        "x": 1260,
+        "y": 3320,
+        "wires": []
+    },
+    {
+        "id": "caa3e12.ae8732",
+        "type": "function",
+        "z": "613373c4.05758c",
+        "name": "",
+        "func": "var maxValue = -200;\nvar indexOfMaxValue = -1;\n    for(var i = 0; i < msg.payload.metadata.gateways.length; i++){\n        if(msg.payload.metadata.gateways[i].rssi > maxValue && msg.payload.metadata.gateways[i].rssi !==0 ){\n            indexOfMaxValue = i;\n            maxValue = msg.payload.metadata.gateways[i].rssi;\n        }\n    }\n\n//gwcnt\nvar msg2 = { payload: msg.payload.length };\nmsg2.payload = msg.payload.metadata.gateways.length;\n\n//rssi\nvar msg3 = { payload: msg.payload.length };\n//msg3.payload = JSON.parse(msg.payload);\nmsg3.payload = msg.payload.metadata.gateways[indexOfMaxValue].rssi;\n\n//snr\nvar msg4 = { payload: msg.payload.length };\n//msg4.payload = JSON.parse(msg.payload);\nmsg4.payload = msg.payload.metadata.gateways[indexOfMaxValue].snr;\n\n//Output\nvar msg9 = {};\nmsg9.payload = [];\nmsg9.payload[0] = msg2.payload;\nmsg9.payload[1] = msg3.payload + 130;\nmsg9.payload[2] = msg4.payload + 20;\n\nreturn msg9;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 3320,
+        "wires": [
+            [
+                "735b92f2.5fdd8c"
+            ]
+        ]
+    },
+    {
+        "id": "71835ad.ce1faa4",
+        "type": "function",
+        "z": "613373c4.05758c",
+        "name": "downlink",
+        "func": "msg.payload = {\n  dev_id: 'device-id',\n  port: 1,\n  confirmed: false,\n  schedule: 'replace',\n  payload_raw: msg.payload.toString('base64')\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 3320,
+        "wires": [
+            [
+                "d9af5c50.4bce9"
+            ]
+        ],
+        "info": "Creates a downlink for the AppId and DevId known from the last uplink."
+    },
+    {
+        "id": "735b92f2.5fdd8c",
+        "type": "buffer-maker",
+        "z": "613373c4.05758c",
+        "name": "",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "name": "item1",
+                "type": "int8",
+                "length": 3,
+                "dataType": "msg",
+                "data": "payload"
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "x": 870,
+        "y": 3320,
+        "wires": [
+            [
+                "71835ad.ce1faa4"
+            ]
+        ]
+    },
+    {
+        "id": "ba61ded5.3561b",
+        "type": "comment",
+        "z": "613373c4.05758c",
+        "name": "drop 1st packet",
+        "info": "",
+        "x": 320,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "6f9ac06b.1e461",
+        "type": "comment",
+        "z": "613373c4.05758c",
+        "name": "Port 99 for LCM",
+        "info": "",
+        "x": 500,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "fa9c2cf2.3ab12",
+        "type": "comment",
+        "z": "613373c4.05758c",
+        "name": "Prepare Downlink",
+        "info": "",
+        "x": 750,
+        "y": 3280,
+        "wires": []
+    },
+    {
+        "id": "c6a7fcf6.25bad",
+        "type": "comment",
+        "z": "613373c4.05758c",
+        "name": "Format Payload for Storage",
+        "info": "",
+        "x": 780,
+        "y": 3400,
+        "wires": []
+    }
+]
