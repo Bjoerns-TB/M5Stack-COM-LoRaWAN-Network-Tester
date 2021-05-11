@@ -2,9 +2,9 @@
 
 A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compatible with TTN (The Things Network)
 
-The AT command set of the module does not allow to perform a LinkCheckRequest. So in this version LCM and SSV mode are not integrated/possible. 
+The AT command set of the module does not allow to perform a LinkCheckRequest. So in this version LCM and SSV mode are not integrated/possible. Currently i am testing a workarround with Node-RED, creating a new downlink with the needed informations.
 
-To use the new SetDR feature, you have to update the CubeCell module. In short you have to flash the LoRa -> AT-Command example ont the CubeCell module. Don't forget to set the region. Instructions for [Update COM.LoRaWAN] (Only in german). ACK won't work past SF8 because TTN will send on RX2 frequency.
+To use the new SetDR feature, you have to update the CubeCell module. In short you have to flash the LoRa -> AT_Command example ont the CubeCell module. Don't forget to set the region. Instructions for [Update COM.LoRaWAN] (Only in german). ACK won't work past SF8 because TTN will send on RX2 frequency an SF9.
 
 [Version for LoRa 868 Module]
 
@@ -129,7 +129,7 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
   
   
 ## Known Bugs/Limitations
-  - No LinkCheckRequest possible
+  - No LinkCheckRequest possible (curently testing an workarround with Node-RED, generating a downlink with the informations.)
   
 
 ## Accesories
