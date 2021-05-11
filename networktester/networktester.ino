@@ -561,12 +561,6 @@ void sendobject() {
     if (result == true) {
       abpcnt++;
 
-      UISet(&UIInputbox_awnh87, "ACK OK");
-
-      if (iwm == 1) {
-        M5.Speaker.beep();
-      }
-
       short length;
       short rssi;
       short snr;
@@ -574,6 +568,16 @@ void sendobject() {
       short datarate;
       memset(buffer, 0, 256);
       length = receivePacket(buffer, 256, &rssi, &snr, &datarate);
+	    
+      if (rssi != -255){
+        UISet(&UIInputbox_awnh87, "ACK OK");
+      } else {
+        UISet(&UIInputbox_awnh87, "ACK NOK");
+      }
+
+      if (iwm == 1 && rssi != -255) {
+        M5.Speaker.beep();
+      }
 
       Serial.print("Datarate: ");
       Serial.println(datarate);
