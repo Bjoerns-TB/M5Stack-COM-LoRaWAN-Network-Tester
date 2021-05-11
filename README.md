@@ -151,6 +151,7 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
     - Fixed beep only on ACK received
     - Changed status message for no ACK received to "ACK NOT OK"
     - Added The Things Stack payload decoder
+    - Turn off LED for RSSI if no ACK received
     
   - 01.03.2021
     - First commit
