@@ -1,6 +1,6 @@
 # M5Stack-COM.LoRaWAN-Network-Tester
 
-A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compatible with TTN (The Things Network)
+A LoRaWAN Network Tester based on the M5Stack for the COM.LoRaWAN module, compatible with TTN (The Things Network). Currently i am only supporting TTN V2, i am testing with The Things Stack (V3), but the node behaves very confusing (sending unwanted/untriggered Uplinks).
 
 The AT command set of the module does not allow to perform a LinkCheckRequest. So in this version LCM and SSV mode are not integrated/possible. Currently i am testing a workarround with Node-RED, creating a new downlink with the needed informations.
 
@@ -82,7 +82,8 @@ function decodeUplink(input) {
 On boot you will be presented with the "Boot-Logo" followed by the first working mode. At the moment the tester has 5 modes to select:
   - [NACK](#nack) 
   - [ACK](#ack)  
-  - [MAN](#man)  
+  - [MAN](#man) 
+  - [LCM](#lcm) 
   - [OTAA](#otaa)
   - [SET](#set)
  
@@ -109,6 +110,12 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
 "MAN" will send a LoRaWAN packet with ACK by pushing button C.
 
 ![MAN Image](https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester/blob/master/images/man.jpg "Fig 4. MAN")
+
+#### LCM 
+#### (LinkCheckMode) - Currently only a teaser, code not implemented yet; Node-RED needed
+"LCM" is a mode that will trigger a LinkCheckRequest, with the help from Node-RED. For this to work you will need a running instance of Node-RED using this [Flow]. Pushing button B will let you cycle through each spreadfactor. The request is triggered by button C. The Uplink data will be presented in te follwoing order: No of Gateways | RSSI | SNR
+
+![LCM Image](https://github.com/Bjoerns-TB/M5Stack-COM-LoRaWAN-Network-Tester/blob/main/images/IMG_2500.jpg "Fig 5. LCM")
 
 #### OTAA 
 #### (OverTheAirActivation)
@@ -163,3 +170,4 @@ By pushig button C the display and LEDs will be turned off. Pushing button C aga
 [Version for LoRa 868 Module]: https://github.com/Bjoerns-TB/M5Stack-LoRa-868-Network-Tester
 [Version for LoRaWAN Module]: https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester
 [Update COM.LoRaWAN]: https://www.bjoerns-techblog.de/2021/05/update-des-com-lorawan/
+[Flow]: https://github.com/Bjoerns-TB/M5Stack-COM-LoRaWAN-Network-Tester/blob/main/node-red/flows.json
